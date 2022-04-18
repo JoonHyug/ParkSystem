@@ -1,38 +1,28 @@
-var express = require('express');
-var http = require('http');
-var path = require('path');
-var bodyParaser = require('body-parser');
+const express = require('express');
+const http = require('http');
+const path = require('path');
+const bodyParaser = require('body-parser');
 
-var app = express();
+const res = require('express/lib/response');
 
-
-var mysql = require('mysql');
-var connection = mysql.createConnection({
-	host :'localhost',
-	user : 'abc',
-	password : '111111',
-	database : 'park_db'
-});
-
-connection.connect();
-
-connection.query('SELECT 1+1 AS solution', function(error, results, fields){
-	if (error) throw error;
-    console.log(results);
-	console.log('The solution is : ', results[0].solution);
-});
-
-connection.end();
+const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParaser.urlencoded({extended: true}));
 
-app.get('/process/login', function(req, res) {	
-	var paramId = req.param('id');
-	
-	console.log('/precess/login 처리, id: '+ paramId);
 
-	res.write("Success");
+app.get('/login', function(req, res) {	
+	let paramId = req.param('id');
+	
+	console.log('/login 처리, id: '+ paramId);
+
+	res.write(paramId);
+	res.write("\nSuccess");
+	res.end();
+});
+
+app.get('/', function(req, res){
+	res.write('Welcom!');
 	res.end();
 });
 
