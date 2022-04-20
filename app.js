@@ -2,6 +2,7 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const bodyParaser = require('body-parser');
+const ejs = require('ejs');
 //DB 세팅
 const mysql = require('mysql');
 const dbconfig = require('./dbconfig.js');
