@@ -1,5 +1,6 @@
 const express = require('express');
 const http = require('http');
+const url = require('url');
 const path = require('path');
 const bodyParaser = require('body-parser');
 const ejs = require('ejs');
@@ -33,8 +34,41 @@ app.get('/testDB', function(req, res){
 	connection.query('SELECT * FROM test', (error, rows) =>{
 		console.log(rows);
 		res.send(rows);
+		res.end();
 	});
 });
+
+app.get('/htmltest', function(req, res){
+	let page;
+	ejs.renderFile('./contents/login.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+        res.end(page);
+});
+
+/* const server = http.createServer(function(req, res){
+	const _url = req.url;
+	const queryData = url.parse(_url, true).query;
+    const pathname = url.parse(_url, true).pathname;
+
+	switch(pathname){
+		case '/' :
+			res.write('Welcom!');
+			res.end();
+			break;
+		case '/testDB' :
+			connection.query('SELECT * FROM test', (error, rows) =>{
+				console.log(rows);
+				res.send(rows); //에러남
+			});
+			break;
+	}
+}); */
+
+/* server.listen((3000), function(){
+	console.log('Express 1서버가 3000번 포트에서 시작됨.');
+}); */
 
 http.createServer(app).listen(3000, function() {
 	console.log('Express 서버가 3000번 포트에서 시작됨.');

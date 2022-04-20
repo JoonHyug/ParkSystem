@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+
+    </title>
+
+    <style>
+        body {
+            background-color: #f9fbfd;
+        }
+
+        #wrap {
+            width: 100%;
+            height: auto;
+            position: relative;
+            margin: 0 auto;
+            min-width: 1200px;
+            min-height: 90vh;
+        }
+
+        .button {
+            margin-top: 15px;
+            padding: 0px;
+            width: 100%;
+            height: 50px;
+            background-color: #464545;
+            color: #EAE9E7;
+        }
+
+        .mainBack {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            padding: 35px 50px 0;
+            width: 350px;
+            height: 530px;
+            transform: translate(-50%, -50%);
+            background-color: #EDECEA;
+            box-shadow: 0 10px 30px 4px rgb(0 0 0 / 4%);
+            border-radius: 4px;
+            ;
+        }
+
+        input {
+            border: none;
+            border-radius: 4px;
+            background-color: #f9fbfd;
+        }
+
+        .userData {
+            margin-bottom: 10px;
+            padding: 0px 8px;
+            height: 54px;
+            width: calc(100% - 16px);
+        }
+
+        .findIdPw {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            bottom: 15px;
+        }
+
+        .registerButton {
+            margin-top: 30px;
+        }
+
+        h1 {
+            color: #464545;
+            text-align: center;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        a {
+            color: #464545;
+            text-decoration: none;
+        }
+
+        a:link {
+            text-decoration: none;
+        }
+
+        a:visited {
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:active {
+            text-decoration: none;
+        }
+
+        input.button:hover {
+            cursor: pointer;
+            background-color: black;
+            box-shadow: 0 10px 30px 4px rgb(0 0 0 / 4%);
+        }
+
+        .line {
+            position: relative;
+        }
+
+        .test {
+            position: absolute;
+            top: calc(50% - 5px);
+            transform: translate(0%, -50%);
+            text-align: left;
+            width: 10%;
+        }
+
+        form h1 {
+            margin-bottom: 25px;
+        }
+
+        .line2 {
+            display: flex;
+            flex-direction: row;
+            margin: 0px;
+            padding: 0px;
+            justify-content: space-between;
+        }
+
+        .userData1 {
+            margin-bottom: 10px;
+            padding: 0px 8px;
+            height: 54px;
+            width: calc(100% - 16px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div class="mainBack">
+            <div class="registerBack">
+                <form name="register" id="register" action="./request_register" method="post" onsubmit="return check_blank();">
+                    <h1>회원가입</h1>
+                    <div class="line">
+                        <div>
+                            <input type="text" id="userId" class="userData" name="userId" value placeholder=" 학번(아이디)">
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div>
+                            <input type="password" id="userPassword" class="userData" name="userPassword" value
+                                placeholder=" 비민번호">
+                        </div>
+                    </div>
+                    <div class="line2">
+                        <div>
+                            <input type="text" id="userFirstName" class="userData1" name="userFirstName" value
+                                placeholder=" 성">
+                        </div>
+                        <div>
+                            <input type="text" id="userSecondName" class="userData1" name="userSecondName" value
+                                placeholder=" 이름">
+                        </div>
+                    </div>
+                    <div class="line">
+                        <div>
+                            <input type="text" id="userEmail" class="userData" name="userEmail" value
+                                placeholder=" 이메일">
+                        </div>
+                    </div>
+                    <div>
+                        <input type="submit" class="button registerButton" name="register" value="가입하기">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function check_blank() {
+        let userId = document.getElementById('userId');
+        let userPassword = document.getElementById('userPassword');
+        let userFirstName = document.getElementById('userFirstName');
+        let userSecondName = document.getElementById('userSecondName');
+        let userEmail = document.getElementById('userEmail');
+        if (userId.value == '' || userId.value == null) {
+            alert('학번(아이디)가 비어있습니다.');
+            return false;
+        } else if (userPassword.value == '' || userPassword.value == null) {
+            alert('비밀번호가 비어있습니다.');
+            return false;
+        } else if (userFirstName.value == '' || userFirstName.value == null) {
+            alert('성이 비어있습니다.');
+            return false;
+        } else if (userSecondName.value == '' || userSecondName.value == null) {
+            alert('이름이 비어있습니다.');
+            return false;
+        } else if (userEmail.value == '' || userEmail == null) {
+            alert('이메일이 비어있습니다.');
+            return false;
+        } else {
+            alert('가입 되었습니다');
+            return true;
+        }
+    }
+
+</script>
+
+</html>
