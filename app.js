@@ -47,6 +47,24 @@ app.get('/htmltest', function(req, res){
         res.end(page);
 });
 
+app.get('/AreaA', function(req, res){
+	let page;
+	ejs.renderFile('./contents/AreaA.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+
+app.get('/main', function(req, res){
+	let page;
+	ejs.renderFile('./contents/main.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+
 /* const server = http.createServer(function(req, res){
 	const _url = req.url;
 	const queryData = url.parse(_url, true).query;
