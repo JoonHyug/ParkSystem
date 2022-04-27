@@ -65,6 +65,21 @@ app.get('/main', function(req, res){
     res.end(page);
 });
 
+app.get('/inDB', function(req, res){
+	let paramId = req.param('data');
+
+	connection.query('INSERT INTO test(test1) VALUES('+data+');', (error, rows) =>{
+		console.log(rows);
+		res.send(rows);
+	});
+
+	console.log('/inDB 처리, id: '+ paramId);
+
+	res.write(paramId);
+	res.write("\nSuccess");
+	res.end();
+});
+
 /* const server = http.createServer(function(req, res){
 	const _url = req.url;
 	const queryData = url.parse(_url, true).query;
