@@ -68,9 +68,8 @@ app.get('/main', function(req, res){
 app.get('/inDB', function(req, res){
 	let paramId = req.param('data');
 
-	connection.query('INSERT INTO test(test1) VALUES('+data+');', (error, rows) =>{
+	connection.query('INSERT INTO test(test1, test2) VALUES(?, ?);',[paramId, paramId], (error, rows) =>{
 		console.log(rows);
-		res.send(rows);
 	});
 
 	console.log('/inDB 처리, id: '+ paramId);
