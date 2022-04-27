@@ -68,7 +68,8 @@ app.get('/main', function(req, res){
 app.get('/inDB', function(req, res){
 	let paramId = req.param('data');
 
-	connection.query('INSERT INTO test(test1, test2) VALUES(?, ?);',[paramId, paramId], (error, rows) =>{
+	//connection.query('INSERT INTO test(test1, test2) VALUES(?, ?);',[paramId, paramId], (error, rows) =>{
+	connection.query('INSERT INTO test(test1) VALUES(?);',[ paramId], (error, rows) =>{
 		console.log(rows);
 	});
 
