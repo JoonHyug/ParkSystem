@@ -10,9 +10,11 @@ const dbconfig = require('./dbconfig.js');
 const connection = mysql.createConnection(dbconfig);
 
 const app = express();
-
+app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParaser.urlencoded({extended: true}));
+
+
 
 
 app.get('/login', function(req, res) {	
@@ -84,17 +86,26 @@ app.get('/AreaD', function(req, res){
 });
 
 app.get('/DBmanage', function(req, res){
+	
 	let page;
-	let data = {
-		data : {
-			id:"1",
-			name:"sdf",
-			artist:"art",
-			genre:"aa"
-		}};
-	ejs.renderFile('./contents/DBmanage.ejs', data, 'utf8', function (err, data) {
+	ejs.renderFile('./contents/DBmanage.ejs', {
+		hehe: "ss",
+		data:[
+			{
+				id:1,
+				name:"hayoon",
+				artist:"no",
+				genre:"pop"
+			},
+			{
+				id:2,
+				name:"boo",
+				artist:"sss",
+				genre:"hippop"
+			},
+
+		]}, 'utf8', function (err, data) {
 			page = data;
-		
 		// connection.query('select * from test', function (err, results) {
 		//   if (err) {
 		// 	res.send(err)
