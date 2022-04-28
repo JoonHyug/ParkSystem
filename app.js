@@ -56,6 +56,58 @@ app.get('/AreaA', function(req, res){
     res.end(page);
 });
 
+app.get('/AreaB', function(req, res){
+	let page;
+	ejs.renderFile('./contents/AreaB.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+
+app.get('/AreaC', function(req, res){
+	let page;
+	ejs.renderFile('./contents/AreaC.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+
+app.get('/AreaD', function(req, res){
+	let page;
+	ejs.renderFile('./contents/AreaD.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+
+app.get('/DBmanage', function(req, res){
+	let page;
+	let data = {
+		data : {
+			id:"1",
+			name:"sdf",
+			artist:"art",
+			genre:"aa"
+		}};
+	ejs.renderFile('./contents/DBmanage.ejs', data, 'utf8', function (err, data) {
+			page = data;
+		
+		// connection.query('select * from test', function (err, results) {
+		//   if (err) {
+		// 	res.send(err)
+		//   } else {
+		// 	res.send(ejs.render(data, {
+		// 	  data: results
+		// 	}))
+		//   }
+		// })
+	  })
+	  res.send(page);
+});
+
 app.get('/main', function(req, res){
 	let page;
 	ejs.renderFile('./contents/main.html', (err, str) => {
