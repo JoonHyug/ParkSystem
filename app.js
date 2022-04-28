@@ -14,6 +14,8 @@ const connection = mysql.createConnection(dbconfig);
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+//app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(bodyParaser.urlencoded({extended: true}));
 
 
@@ -135,13 +137,14 @@ app.get('/', function(req, res){
 // test1 int NOT NULL,
 // test2 VARCHAR(50));
 app.post('/inDB', function(req, res){
-	const body = req.body;
+	const body = req.body;	//app.use(express.json());사용 안한거, 아두이노에서 json파일 크기가 너무 작아서 body를 읽기 전에 클라이언트가 중단되어서 오류가 생겼었음
 	console.log(body);
-	connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[
-		body.id, 
+	//connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[
+	connection.query('UPDATE test SET test1=?, test2=? WHERE id=?;',[	 
 		body.test1, 
-		body.test2
-	]);
+		body.test2,
+		body.id
+	]);//같은 id값이라서 중복해서 삽입 할 경우 에러남
 });
 
 app.get('/delete/:id', function(req, res){
