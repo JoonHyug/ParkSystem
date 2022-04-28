@@ -10,27 +10,26 @@
     <h1>
         DB 관리 페이지
     </h1>
-    <a href="/insert">Add Music</a>
+    <a href="/insert">Add Data</a>
     <hr/>
     <table border="1">
       <tr>
         <th>DELETE</th>
         <th>EDIT</th>
         <th>id</th>
-        <th>Name</th>
-        <th>Artist</th>
-        <th>Genre</th>
+        <th>test1</th>
+        <th>test2</th>
       </tr>
       <% data.forEach(function (item, index) { %>
         <tr>
           <td><a href="/delete/<%= item.id%>">DELETE</a></td>
-          <td><a href="/edit/<%= item.id %>">EDIT</a></td>
+          <td><a href="/edit/<%= item.id%>">EDIT</a></td>
           <td><%= item.id %></td>
-          <td><%= item.name %></td>
-          <td><%= item.artist %></td>
-          <td><%= item.genre %></td>
+          <td><%= item.test1 %></td>
+          <td><%= item.test2 %></td>
         </tr>
         <% }); %>
     </table>
+    <a href="/"><button>main</button></a>
 </body>
 </html>

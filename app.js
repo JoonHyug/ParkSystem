@@ -3,7 +3,9 @@ const http = require('http');
 const url = require('url');
 const path = require('path');
 const bodyParaser = require('body-parser');
+const fs = require('fs');
 const ejs = require('ejs');
+
 //DB 세팅
 const mysql = require('mysql');
 const dbconfig = require('./dbconfig.js');
@@ -27,10 +29,10 @@ app.get('/login', function(req, res) {
 	res.end();
 });
 
-app.get('/', function(req, res){
-	res.write('Welcom!');
-	res.end();
-});
+// app.get('/', function(req, res){
+// 	res.write('Welcom!');
+// 	rse.end();
+// });
 
 app.get('/testDB', function(req, res){
 	connection.query('SELECT * FROM test', (error, rows) =>{
@@ -40,16 +42,17 @@ app.get('/testDB', function(req, res){
 	});
 });
 
-app.get('/htmltest', function(req, res){
-	let page;
-	ejs.renderFile('./contents/login.html', (err, str) => {
-		page = str;
-	});
-	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-        res.end(page);
-});
+// app.get('/htmltest', function(req, res){
+// 	let page;
+// 	ejs.renderFile('./contents/login.html', (err, str) => {
+// 		page = str;
+// 	});
+// 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+//         res.end(page);
+// });
 
-app.get('/AreaA', function(req, res){
+let temp = "A";
+app.get('/Area'+temp, function(req, res){
 	let page;
 	ejs.renderFile('./contents/AreaA.html', (err, str) => {
 		page = str;
@@ -86,40 +89,39 @@ app.get('/AreaD', function(req, res){
 });
 
 app.get('/DBmanage', function(req, res){
-	
-	let page;
-	ejs.renderFile('./contents/DBmanage.ejs', {
-		hehe: "ss",
-		data:[
-			{
-				id:1,
-				name:"hayoon",
-				artist:"no",
-				genre:"pop"
-			},
-			{
-				id:2,
-				name:"boo",
-				artist:"sss",
-				genre:"hippop"
-			},
+	// let page;
+	// ejs.renderFile('./contents/DBmanage.ejs', {
+	// 	hehe: "ss",
+	// 	data:[
+	// 		{
+	// 			id:1,
+	// 			name:"hayoon",
+	// 			artist:"no",
+	// 			genre:"pop"
+	// 		},
+	// 		{
+	// 			id:2,
+	// 			name:"boo",
+	// 			artist:"sss",
+	// 			genre:"hippop"
+	// 		},
 
-		]}, 'utf8', function (err, data) {
-			page = data;
-		// connection.query('select * from test', function (err, results) {
-		//   if (err) {
-		// 	res.send(err)
-		//   } else {
-		// 	res.send(ejs.render(data, {
-		// 	  data: results
-		// 	}))
-		//   }
-		// })
+	// 	]}, 'utf8', function (err, data) {
+	// 		page = data;
+	fs.readFile('./contents/DBmanage.ejs','utf8', function (err, data) {
+		connection.query('select * from test', function (err, results) {
+		  if (err) {
+			res.send(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results
+			}))
+		  }
+		})
 	  })
-	  res.send(page);
 });
 
-app.get('/main', function(req, res){
+app.get('/', function(req, res){
 	let page;
 	ejs.renderFile('./contents/main.html', (err, str) => {
 		page = str;
@@ -128,11 +130,14 @@ app.get('/main', function(req, res){
     res.end(page);
 });
 
+// CREATE TABLE test(
+// id int NOT NULL PRIMARY KEY,
+// test1 int NOT NULL,
+// test2 VARCHAR(50));
 app.get('/inDB', function(req, res){
-	let paramId = req.param('data');
+	const body = req.body;
 
-	//connection.query('INSERT INTO test(test1, test2) VALUES(?, ?);',[paramId, paramId], (error, rows) =>{
-	connection.query('INSERT INTO test(test1) VALUES(?);',[ paramId], (error, rows) =>{
+	connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[body.id, body.test1, body.test2], (error, rows) =>{
 		console.log(rows);
 	});
 
@@ -142,6 +147,48 @@ app.get('/inDB', function(req, res){
 	res.write("\nSuccess");
 	res.end();
 });
+
+app.get('/delete/:id', function(req, res){
+	connection.query('DELETE FROM test WHERE id=?;', [req.params.id], function(){
+		res.redirect('/DBmanage');
+	})
+});
+
+app.get('/insert', function(req, res){
+	fs.readFile('./contents/insert.html', 'utf-8', function(err, data){
+		res.send(data);
+	})
+});
+app.post('/insert', function(req, res){
+	const body = req.body;
+	connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);', [
+		body.id,
+		body.test1,
+		body.test2
+	  ], function() {
+	res.redirect('/')
+	})
+});
+app.get('/edit/:id', function(req, res){
+	fs.readFile('./contents/edit.ejs', 'utf-8', function(err, data){
+		connection.query('SELECT * FROM test WHERE id=?;', [req.params.id], function(err, result){
+			res.send(ejs.render(data, {
+				data : result[0]
+			}))
+		})
+	})
+});
+app.post('/edit/:id', function(req, res){
+	const body = req.body;
+
+	connection.query('UPDATE test SET test1=?, test2=? WHERE id=?', [
+		body.test1, 
+		body.test2, 
+		req.params.id], 
+		function(){
+		res.redirect('/DBmanage')
+	})
+})
 
 /* const server = http.createServer(function(req, res){
 	const _url = req.url;
