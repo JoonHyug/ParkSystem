@@ -166,7 +166,7 @@ app.post('/insert', function(req, res){
 		body.test1,
 		body.test2
 	  ], function() {
-	res.redirect('/')
+	res.redirect('/DBmanage')
 	})
 });
 app.get('/edit/:id', function(req, res){
