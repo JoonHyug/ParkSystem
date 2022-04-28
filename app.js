@@ -134,18 +134,14 @@ app.get('/', function(req, res){
 // id int NOT NULL PRIMARY KEY,
 // test1 int NOT NULL,
 // test2 VARCHAR(50));
-app.get('/inDB', function(req, res){
+app.post('/inDB', function(req, res){
 	const body = req.body;
-
-	connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[body.id, body.test1, body.test2], (error, rows) =>{
-		console.log(rows);
-	});
-
-	console.log('/inDB 처리, id: '+ paramId);
-
-	res.write(paramId);
-	res.write("\nSuccess");
-	res.end();
+	console.log(body);
+	connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[
+		body.id, 
+		body.test1, 
+		body.test2
+	]);
 });
 
 app.get('/delete/:id', function(req, res){
