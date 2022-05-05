@@ -56,7 +56,7 @@ app.get('/testDB', function(req, res){
 let temp = "A";
 app.get('/Area'+temp, function(req, res){
 	fs.readFile('./contents/AreaA.ejs','utf8', function (err, data) {
-		connection.query('select * from park_isparking', function (err, results) {
+		connection.query('select * from PARK_isParking', function (err, results) {
 		  if (err) {
 			res.send(err)
 		  } else {
@@ -209,7 +209,7 @@ app.post('/edit/:id', function(req, res){
 })
 //--------------------------------------추후 간소화 시켜야함-----------------------
 app.get('/deleteA/:id', function(req, res){
-	connection.query('DELETE FROM park_isparking WHERE id=?;', [req.params.id], function(){
+	connection.query('DELETE FROM PARK_isParking WHERE id=?;', [req.params.id], function(){
 		res.redirect('/AreaADB');
 	})
 });
@@ -221,7 +221,7 @@ app.get('/insertA', function(req, res){
 });
 app.post('/insertA', function(req, res){
 	const body = req.body;
-	connection.query('INSERT INTO park_isparking(id, state) VALUES(?, ?);', [
+	connection.query('INSERT INTO PARK_isParking(id, state) VALUES(?, ?);', [
 		body.id,
 		Boolean(body.state)
 	  ], function() {
@@ -230,7 +230,7 @@ app.post('/insertA', function(req, res){
 });
 app.get('/editA/:id', function(req, res){
 	fs.readFile('./contents/editA.ejs', 'utf-8', function(err, data){
-		connection.query('SELECT * FROM park_isparking WHERE id=?;', [req.params.id], function(err, result){
+		connection.query('SELECT * FROM PARK_isParking WHERE id=?;', [req.params.id], function(err, result){
 			console.log(result);
 			res.send(ejs.render(data, {
 				data : result[0]
@@ -241,7 +241,7 @@ app.get('/editA/:id', function(req, res){
 app.post('/editA/:id', function(req, res){
 	const body = req.body;
 	console.log(body);
-	connection.query('UPDATE park_isparking SET state=? WHERE id=?;', [
+	connection.query('UPDATE PARK_isParking SET state=? WHERE id=?;', [
 		Boolean(body.state),
 		req.params.id], 
 		function(){
