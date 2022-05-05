@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .Parking_State{
+        background-color : blue;
+      }
+    </style>
+</head>
+<body>
+  <script>
+  </script>
+    <h1>A구역입니다.</h1>
+    <table border="1">
+      <% data.forEach(function (item, index) { %>
+        <% if(item.state == 0){ %>
+          <td id = <%= item.id %>><%= item.id %></td>
+        <% if((index+1) % 4 == 0){ %>
+          <tr></tr>
+        <% } %>
+        <% } else {%>
+          <td class="Parking_State" id = <%= item.id %>><%= item.id %></td>
+        <% if((index+1) % 4 == 0){ %>
+          <tr></tr>
+        <% } %>
+        <%} %>
+      <% }); %>
+    </table>
+    <a href="/"><button>main</button></a>
+    <a href="/AreaADB"><button>DB관리</button></a>
+</body>
+</html>

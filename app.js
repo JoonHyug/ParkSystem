@@ -55,12 +55,31 @@ app.get('/testDB', function(req, res){
 
 let temp = "A";
 app.get('/Area'+temp, function(req, res){
-	let page;
-	ejs.renderFile('./contents/AreaA.html', (err, str) => {
-		page = str;
-	});
-	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-    res.end(page);
+	fs.readFile('./contents/AreaA.ejs','utf8', function (err, data) {
+		connection.query('select * from park_isparking', function (err, results) {
+		  if (err) {
+			res.send(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results
+			}))
+		  }
+		})
+	  })
+});
+
+app.get('/AreaADB', function(req, res){
+	fs.readFile('./contents/AreaADBmanage.ejs','utf8', function (err, data) {
+		connection.query('select * FROM PARK_isParking', function (err, results) {
+		  if (err) {
+			res.send(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results
+			}))
+		  }
+		})
+	  })
 });
 
 app.get('/AreaB', function(req, res){
@@ -186,6 +205,47 @@ app.post('/edit/:id', function(req, res){
 		req.params.id], 
 		function(){
 		res.redirect('/DBmanage')
+	})
+})
+//--------------------------------------추후 간소화 시켜야함-----------------------
+app.get('/deleteA/:id', function(req, res){
+	connection.query('DELETE FROM park_isparking WHERE id=?;', [req.params.id], function(){
+		res.redirect('/AreaADB');
+	})
+});
+
+app.get('/insertA', function(req, res){
+	fs.readFile('./contents/insertA.html', 'utf-8', function(err, data){
+		res.send(data);
+	})
+});
+app.post('/insertA', function(req, res){
+	const body = req.body;
+	connection.query('INSERT INTO park_isparking(id, state) VALUES(?, ?);', [
+		body.id,
+		Boolean(body.state)
+	  ], function() {
+	res.redirect('/AreaADB')
+	})
+});
+app.get('/editA/:id', function(req, res){
+	fs.readFile('./contents/editA.ejs', 'utf-8', function(err, data){
+		connection.query('SELECT * FROM park_isparking WHERE id=?;', [req.params.id], function(err, result){
+			console.log(result);
+			res.send(ejs.render(data, {
+				data : result[0]
+			}))
+		})
+	})
+});
+app.post('/editA/:id', function(req, res){
+	const body = req.body;
+	console.log(body);
+	connection.query('UPDATE park_isparking SET state=? WHERE id=?;', [
+		Boolean(body.state),
+		req.params.id], 
+		function(){
+		res.redirect('/AreaADB')
 	})
 })
 

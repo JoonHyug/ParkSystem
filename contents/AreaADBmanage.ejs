@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body> 
+    <h1>
+        DB 관리 페이지
+    </h1>
+    <a href="/insertA">Add Data</a>
+    <hr/>
+    <table border="1">
+      <tr>
+        <th>DELETE</th>
+        <th>EDIT</th>
+        <th>id</th>
+        <th>state</th>
+      </tr>
+      <% data.forEach(function (item, index) { %>
+        <tr>
+          <td><a href="/deleteA/<%= item.id%>">DELETE</a></td>
+          <td><a href="/editA/<%= item.id%>">EDIT</a></td>
+          <td><%= item.id %></td>
+          <td><%= item.state %></td>
+        </tr>
+        <% }); %>
+    </table>
+    <a href="/"><button>main</button></a>
+</body>
+</html>
