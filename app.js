@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParaser = require('body-parser');
 const fs = require('fs');
 const ejs = require('ejs');
+// const static = require('serve-static');
 
 //DB 세팅
 const mysql = require('mysql');
@@ -12,49 +13,47 @@ const dbconfig = require('./dbconfig.js');
 const { platform } = require('os');
 const connection = mysql.createConnection(dbconfig);
 
+//log 설정
 //로그 테스트
-// const logPath = './connection.log';
-// function ensureLogFile(){
-// 	const isExists = fs.existsSync(logPath);
-// 	if( !isExists){
-// 		fs.writeFileSync(logPath, '');
-// 	}
-// }
-// function readFromLogFile(){
-// 	ensureLogFile();
-// 	return fs.readFileSync(logPath).toString('utf8');
-// }
-// function writeLogFile(remoteAddress){
-// 	const beforeLog = readFromLogFile();
-// 	const now = new Date().toUTCString();
-// 	const newLog = '${now}: ${remoteAddress} Access';
-// 	fs.writeFileSync(logPath, '${beforeLog}\n${newLog}');
-// }
+const logPath = './connection.log';
+function ensureLogFile(){
+	const isExists = fs.existsSync(logPath);
+	if( !isExists){
+		fs.writeFileSync(logPath, '');
+	}
+};
+function readFromLogFile(){
+	ensureLogFile();
+	return fs.readFileSync(logPath).toString('utf8');
+};
+function writeLogFile(remoteAddress){
+	const beforeLog = readFromLogFile();
+	const now = new Date().toUTCString();
+	const newLog = `${now}: ${remoteAddress} Access`;
+	fs.writeFileSync(logPath, `${beforeLog}\n${newLog}`);
+};
 
 const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+//app.use(express.static('views'));
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(bodyParaser.urlencoded({extended: true}));
 
 
 
-
-app.get('/login', function(req, res) {	
-	let paramId = req.param('id');
-
-	console.log('/login 처리, id: '+ paramId);
-
-	res.write(paramId);
-	res.write("\nSuccess");
-	res.end();
+app.get('/', function(req, res){
+	let page;
+	//console.log(path);
+	ejs.renderFile('./views//main.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
 });
 
-// app.get('/', function(req, res){
-// 	res.write('Welcom!');
-// 	rse.end();
-// });
 
 app.get('/testDB', function(req, res){
 	connection.query('SELECT * FROM test', (error, rows) =>{
@@ -81,8 +80,8 @@ app.get('/Area'+temp, function(req, res){
 	console.log(req.route.path);
 	console.log(req.route.methods);
 	//로그 테스트
-	// writeLogFile(req.connection.remoteAddress);
-	fs.readFile('./contents/AreaA.ejs','utf8', function (err, data) {
+	writeLogFile(req.connection.remoteAddress);
+	fs.readFile('./views/AreaA.ejs','utf8', function (err, data) {
 		connection.query('select * from PARK_isParking', function (err, results) {
 		  if (err) {
 			res.send(err)
@@ -96,7 +95,7 @@ app.get('/Area'+temp, function(req, res){
 });
 
 app.get('/AreaADB', function(req, res){
-	fs.readFile('./contents/AreaADBmanage.ejs','utf8', function (err, data) {
+	fs.readFile('./views/AreaADBmanage.ejs','utf8', function (err, data) {
 		connection.query('select * FROM PARK_isParking', function (err, results) {
 		  if (err) {
 			res.send(err)
@@ -111,7 +110,7 @@ app.get('/AreaADB', function(req, res){
 
 app.get('/AreaB', function(req, res){
 	let page;
-	ejs.renderFile('./contents/AreaB.html', (err, str) => {
+	ejs.renderFile('./views/AreaB.html', (err, str) => {
 		page = str;
 	});
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
@@ -120,7 +119,7 @@ app.get('/AreaB', function(req, res){
 
 app.get('/AreaC', function(req, res){
 	let page;
-	ejs.renderFile('./contents/AreaC.html', (err, str) => {
+	ejs.renderFile('./views/AreaC.html', (err, str) => {
 		page = str;
 	});
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
@@ -129,7 +128,7 @@ app.get('/AreaC', function(req, res){
 
 app.get('/AreaD', function(req, res){
 	let page;
-	ejs.renderFile('./contents/AreaD.html', (err, str) => {
+	ejs.renderFile('./views/AreaD.html', (err, str) => {
 		page = str;
 	});
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
@@ -156,7 +155,7 @@ app.get('/DBmanage', function(req, res){
 
 	// 	]}, 'utf8', function (err, data) {
 	// 		page = data;
-	fs.readFile('./contents/DBmanage.ejs','utf8', function (err, data) {
+	fs.readFile('./views/DBmanage.ejs','utf8', function (err, data) {
 		connection.query('select * from test', function (err, results) {
 		  if (err) {
 			res.send(err)
@@ -167,15 +166,6 @@ app.get('/DBmanage', function(req, res){
 		  }
 		})
 	  })
-});
-
-app.get('/', function(req, res){
-	let page;
-	ejs.renderFile('./contents/main.html', (err, str) => {
-		page = str;
-	});
-	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-    res.end(page);
 });
 
 // CREATE TABLE test(
@@ -200,7 +190,7 @@ app.get('/delete/:id', function(req, res){
 });
 
 app.get('/insert', function(req, res){
-	fs.readFile('./contents/insert.html', 'utf-8', function(err, data){
+	fs.readFile('./views/insert.html', 'utf-8', function(err, data){
 		res.send(data);
 	})
 });
@@ -215,7 +205,7 @@ app.post('/insert', function(req, res){
 	})
 });
 app.get('/edit/:id', function(req, res){
-	fs.readFile('./contents/edit.ejs', 'utf-8', function(err, data){
+	fs.readFile('./views/edit.ejs', 'utf-8', function(err, data){
 		connection.query('SELECT * FROM test WHERE id=?;', [req.params.id], function(err, result){
 			res.send(ejs.render(data, {
 				data : result[0]
@@ -242,7 +232,7 @@ app.get('/deleteA/:id', function(req, res){
 });
 
 app.get('/insertA', function(req, res){
-	fs.readFile('./contents/insertA.html', 'utf-8', function(err, data){
+	fs.readFile('./views/insertA.html', 'utf-8', function(err, data){
 		res.send(data);
 	})
 });
@@ -256,7 +246,7 @@ app.post('/insertA', function(req, res){
 	})
 });
 app.get('/editA/:id', function(req, res){
-	fs.readFile('./contents/editA.ejs', 'utf-8', function(err, data){
+	fs.readFile('./views/editA.ejs', 'utf-8', function(err, data){
 		connection.query('SELECT * FROM PARK_isParking WHERE id=?;', [req.params.id], function(err, result){
 			console.log(result);
 			res.send(ejs.render(data, {
