@@ -23,9 +23,35 @@
     margin-bottom: 15px;
 }
 .AreaButton{
+    position: relative;
+    top: 80px;
     width: 100%;
     margin: auto;
 }
-#nav-custom{
+header{
+    position: relative;
+}
+.menubar{
+    position: absolute;
+    left: 50%;
+    transform:translate(-50%, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.test{
     font-size:1.75rem;
+}
+.test1{
+    position: absolute;
+    right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.test_button{
+    width: 70px;
+    height: 70px;
 }
