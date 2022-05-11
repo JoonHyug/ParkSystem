@@ -9,7 +9,27 @@ const ejs = require('ejs');
 //DB 세팅
 const mysql = require('mysql');
 const dbconfig = require('./dbconfig.js');
+const { platform } = require('os');
 const connection = mysql.createConnection(dbconfig);
+
+//로그 테스트
+// const logPath = './connection.log';
+// function ensureLogFile(){
+// 	const isExists = fs.existsSync(logPath);
+// 	if( !isExists){
+// 		fs.writeFileSync(logPath, '');
+// 	}
+// }
+// function readFromLogFile(){
+// 	ensureLogFile();
+// 	return fs.readFileSync(logPath).toString('utf8');
+// }
+// function writeLogFile(remoteAddress){
+// 	const beforeLog = readFromLogFile();
+// 	const now = new Date().toUTCString();
+// 	const newLog = '${now}: ${remoteAddress} Access';
+// 	fs.writeFileSync(logPath, '${beforeLog}\n${newLog}');
+// }
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -55,6 +75,13 @@ app.get('/testDB', function(req, res){
 
 let temp = "A";
 app.get('/Area'+temp, function(req, res){
+	console.log(req.headers.host);
+	console.log(req.hea)
+	console.log(req.ip);
+	console.log(req.route.path);
+	console.log(req.route.methods);
+	//로그 테스트
+	// writeLogFile(req.connection.remoteAddress);
 	fs.readFile('./contents/AreaA.ejs','utf8', function (err, data) {
 		connection.query('select * from PARK_isParking', function (err, results) {
 		  if (err) {
