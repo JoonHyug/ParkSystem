@@ -176,9 +176,8 @@ app.post('/inDB', function(req, res){
 	const body = req.body;	//app.use(express.json());사용 안한거, 아두이노에서 json파일 크기가 너무 작아서 body를 읽기 전에 클라이언트가 중단되어서 오류가 생겼었음
 	console.log(body);
 	//connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[
-	connection.query('UPDATE test SET test1=?, test2=? WHERE id=?;',[	 
-		body.test1, 
-		body.test2,
+	connection.query('UPDATE PARK_isParking SET state=? WHERE id=?;',[	 
+		body.state,
 		body.id
 	]);//같은 id값이라서 중복해서 삽입 할 경우 에러남
 });
@@ -264,6 +263,20 @@ app.post('/editA/:id', function(req, res){
 		function(){
 		res.redirect('/AreaADB')
 	})
+})
+
+app.get('/inputData', function(req, res){
+	connection.query(`INSERT INTO PARK_isParking(id, state) VALUES
+					("A-001", 0),
+					("A-002", 0),
+					("A-003", 0),
+					("A-004", 0),
+					("A-005", 0),
+					("A-006", 0),
+					("A-007", 0),
+					("A-008", 0);
+					`),
+					res.redirect('/');
 })
 
 /* const server = http.createServer(function(req, res){
