@@ -1,0 +1,165 @@
+#include <ArduinoJson.h>
+#include <SPI.h>
+#include <WiFiNINA.h>
+
+#define triggerPin 5
+#define echoPin 4
+
+char ssid[] = "";
+char pass[] = "";
+//char ssid[] = "";          //  your network SSID (name)
+//char pass[] = "";           // your network password
+
+int status = WL_IDLE_STATUS;  
+char servername[]="";//aws      // remote server we will connect to
+//char servername[]="";//로컬
+
+bool isparking = false;
+int park_in_count = 0;
+int park_out_count = 0;
+char id[] = "A-001";
+
+String parking_out = "";
+String parking_in = "";
+StaticJsonDocument<512> doc;
+JsonObject root = doc.to<JsonObject>();
+
+WiFiClient client;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Attempting to connect to WPA network...");
+  Serial.print("SSID: ");
+  Serial.println(ssid);
+
+  pinMode(triggerPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  root["id"] = id;
+  root["state"] = true;
+  serializeJsonPretty(doc, parking_in);
+  root["id"] = id;
+  root["state"] = false;
+  serializeJsonPretty(doc, parking_out);
+
+  status = WiFi.begin(ssid, pass);
+}
+
+void loop() {
+  
+  if ( status != WL_CONNECTED) {
+    Serial.println("Try a wifi connection");
+    while(true){
+      Serial.println("Couldn't get a wifi connection");
+      if( status == WL_CONNECTED){
+        Serial.println("wifi connection success");
+        break;
+      }
+      status = WiFi.begin(ssid, pass);
+      delay(1000);
+    }
+  }
+  
+  distance();
+  if(isparking == true){
+    park_out_count = 0;
+    if(park_in_count == 5){
+      Connect_Server_in();
+    }
+    if(park_in_count >= 20000){
+      park_in_count = 6;
+    }
+  } else {
+    park_in_count = 0;
+    if(park_out_count == 5){
+      Connect_Server_out();
+    }
+    if(park_out_count >= 20000){
+      park_out_count = 6;
+    }
+  }
+  delay(1000);
+}
+
+void distance(){
+  double Duration = 0;
+  digitalWrite(triggerPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(triggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(triggerPin, LOW);
+  
+  Duration = pulseIn(echoPin, HIGH);
+
+  double Distance_mm = Duration / 5.8;
+  
+  if((Distance_mm < 100) && (Distance_mm > 20)){
+    Serial.print("Distance = "); 
+    Serial.print(Distance_mm);
+    Serial.println(" mm");
+    park_in_count++;
+    if(park_in_count <= 5){
+      isparking = true;
+    }
+  } else {
+    Serial.print(Distance_mm);
+    Serial.print(" mm ");
+    Serial.println("Out of range");
+    park_out_count++;
+    if(park_out_count <= 5){
+      isparking = false;
+    }
+  }
+}
+
+void Connect_Server_in(){
+  if ( status != WL_CONNECTED) {
+    Serial.println("Couldn't get a wifi connection");
+  }
+  else {
+    Serial.println("Connected to wifi");
+    Serial.println("\nStarting connection...");
+    // if you get a connection, report back via serial:
+    if (client.connect(servername, 3000)) {
+      Serial.println("connected");
+      // Make a HTTP request:
+
+      client.println("POST /inDB HTTP/1.1");
+      client.println("HOST: "+servername+":3000");
+      client.println("User-Agent: Arduino");
+      client.println("Accept: application/json");
+      client.println("Content-Type: application/json");
+      client.print("Content-Length: ");
+      client.println(parking_in.length());
+      client.println();
+      client.println(parking_in);
+      client.println();
+    }
+  }
+}
+
+void Connect_Server_out(){
+  if ( status != WL_CONNECTED) {
+    Serial.println("Couldn't get a wifi connection");
+  }
+  else {
+    Serial.println("Connected to wifi");
+    Serial.println("\nStarting connection...");
+    // if you get a connection, report back via serial:
+    if (client.connect(servername, 3000)) {
+      Serial.println("connected");
+      // Make a HTTP request:
+
+      client.println("POST /inDB HTTP/1.1");
+      client.println("HOST: "+servername+":3000");
+      client.println("User-Agent: Arduino");
+      client.println("Accept: application/json");
+      client.println("Content-Type: application/json");
+      client.print("Content-Length: ");
+      client.println(parking_out.length());
+      client.println();
+      client.println(parking_out);
+      client.println();
+    }
+  }
+}
