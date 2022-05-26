@@ -52,6 +52,25 @@ header{
     
 }
 .test_button{
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
+}
+
+#map{
+    display: block;
+    position: relative;
+    top: 80px;
+}
+.overlay_text{
+    display: block;
+    line-height: 35px;
+    background: blue;
+    border: 2px solid black;
+    color: white;
+    height:35px;
+    width: 35px;
+    padding: auto;
+    text-align: center;
+    top:auto;
+    border-radius: 50%;
 }
