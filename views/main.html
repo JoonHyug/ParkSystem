@@ -26,8 +26,8 @@
         park_area =[
         {
             "name":"A",
-            "latitude":36.33772801771988, 
-            "longitude": 127.4495646858748
+            "latitude":36.3394356377478, 
+            "longitude": 127.447190803451
         },
         {
             "name":"B",
@@ -40,6 +40,7 @@
             "longitude":127.446932283495
         },
         {
+            //지워야 할거 같음
             "name":"D",
             "latitude": 36.3380143884459,
             "longitude":127.447096355005
@@ -93,71 +94,37 @@
         };
         var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-        //W2 국제교육센터 앞
-        var marker_A = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.3394356377478, 127.447190803451), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-
-		var marker_B = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.33948, 127.448), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-
-        var marker_C = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.338, 127.4471), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-
-        var marker_D = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.3372, 127.4462), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-
-        var marker_E = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.337, 127.4467), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-
-        var marker_F = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.3358, 127.4452), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-
-        var marker_G = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.3356, 127.4439), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-
         for(var i=0;i<Object.keys(park_area).length;i++){
-            console.log(i);
+            var temp = park_area[i]["name"];
+            var imageSrc = '/images/marker_'+temp+'.svg',
+                imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
+                imageOption = {offset: new kakao.maps.Point(27, 50)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+            var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+            markerPosition = new kakao.maps.LatLng(park_area[i]["latitude"], park_area[i]["longitude"]); // 마커가 표시될 위치입니다
+            window['marker_'+temp] = new kakao.maps.Marker({
+                position: markerPosition,
+                image: markerImage // 마커이미지 설정 
+            });
+            window['marker_'+temp].setMap(map);
         }
-        var temp = "H";
-        var imageSrc = '/images/marker_'+temp+'.svg',
-            imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
-            imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+        //var temp = "H";
+        //var imageSrc = '/images/marker_'+temp+'.svg',
+        //    imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
+        //    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
         
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-            markerPosition = new kakao.maps.LatLng(park_area[1]["latitude"], park_area[1]["longitude"]); // 마커가 표시될 위치입니다
+        //var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+        //    markerPosition = new kakao.maps.LatLng(park_area[1]["latitude"], park_area[1]["longitude"]); // 마커가 표시될 위치입니다
 
-        //var marker_test = "var marker_" + temp;
-        //var a = eval(marker_test);
-        window['marker_'+temp] = new kakao.maps.Marker({
-            position: markerPosition,
-            image: markerImage // 마커이미지 설정 
-        });
-        //a.setMap(map);  //사용법 1 //보안성 매우 취약
-        window['marker_'+temp].setMap(map); //사용법 2
+        ////var marker_test = "var marker_" + temp;
+        ////var a = eval(marker_test);
+        //window['marker_'+temp] = new kakao.maps.Marker({
+        //    position: markerPosition,
+        //    image: markerImage // 마커이미지 설정 
+        //});
+        ////a.setMap(map);  //사용법 1 //보안성 매우 취약
+        //window['marker_'+temp].setMap(map); //사용법 2
 
-        var marker_I = new kakao.maps.Marker({
-		    position: new kakao.maps.LatLng(36.3362, 127.45386), // 마커의 좌표
-		    map: map // 마커를 표시할 지도 객체
-		});
-        var iwContent = '<a href="./AreaJ"><div class="overlay_text">I</div></a>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-        var marker_J = new kakao.maps.CustomOverlay({
-            position: new kakao.maps.LatLng(36.3358, 127.4534),
-            content: iwContent
-        });
+        
 
 
 
@@ -203,25 +170,22 @@
         });
 
 
-        
-        var infowindow = new kakao.maps.InfoWindow({
-            content : iwContent
-        });
+        var iwContent = '<a href="./AreaI"><div class="overlay_text">우송정보대학 앞</div></a>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         var customOverlay = new kakao.maps.CustomOverlay({
-            position: new kakao.maps.LatLng(36.3362, 127.45386),
+            position: new kakao.maps.LatLng(park_area[8]["latitude"], park_area[8]["longitude"]),
             content: iwContent
         });
         
         kakao.maps.event.addListener(marker_I, 'mouseover', function() {
             // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-              customOverlay.setMap(map);
-          });
+            //marker_I.setMap();
+            customOverlay.setMap(map);
+        });
         kakao.maps.event.addListener(marker_I, 'mouseout', function() {
-            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+            //marker_I.setMap(map);
             customOverlay.setMap();
         });
-        
-        marker_J.setMap(map);
 
         function setDraggable(draggable) {
             // 마우스 드래그로 지도 이동 가능여부를 설정합니다

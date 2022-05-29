@@ -37,6 +37,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static('public'));
+//app.use(express.static(path.join(__dirname, 'views')));
 //app.use(express.static('views'));
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
@@ -47,7 +48,7 @@ app.use(bodyParaser.urlencoded({extended: true}));
 app.get('/', function(req, res){
 	let page;
 	//console.log(path);
-	ejs.renderFile('./views//main.html', (err, str) => {
+	ejs.renderFile('./views/main.html', (err, str) => {
 		page = str;
 	});
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
