@@ -170,12 +170,14 @@
         });
 
 
+        //지역 이름 JSON화 가능 및 for문으로 간결하게
         var iwContent = '<a href="./AreaI"><div class="overlay_text">우송정보대학 앞</div></a>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         var customOverlay = new kakao.maps.CustomOverlay({
             position: new kakao.maps.LatLng(park_area[8]["latitude"], park_area[8]["longitude"]),
             content: iwContent
         });
         
+        //이거는 전부 작성 해야할듯?
         kakao.maps.event.addListener(marker_I, 'mouseover', function() {
             // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
             //marker_I.setMap();
