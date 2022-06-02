@@ -18,75 +18,12 @@
                 <a href="./DBmanage" ><button class="test_button">관리</button></a>
             </div>
     </header>
+   
 
     <div id="map" style="width:100%;height:800px;"></div>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=279dfcb5118231a09c15c572ff511d68">
     </script>
-    <script>
-        park_area =[
-        {
-            "name":"A",
-            "latitude":36.3394356377478, 
-            "longitude": 127.447190803451
-        },
-        {
-            "name":"B",
-            "latitude":36.3382083742845,
-            "longitude":127.445223395473
-        },
-        {
-            "name":"C",
-            "latitude": 36.338053302047,
-            "longitude":127.446932283495
-        },
-        {
-            //지워야 할거 같음
-            "name":"D",
-            "latitude": 36.3380143884459,
-            "longitude":127.447096355005
-        },
-        {
-            "name":"E",
-            "latitude": 36.3380449702238,
-            "longitude":127.44735271687
-        },
-        {
-            "name":"F",
-            "latitude": 36.336826550018,
-            "longitude":127.446638461458
-        },
-        {
-            "name":"G",
-            "latitude": 36.3354608192731,
-            "longitude":127.444341764188
-        },
-        {
-            "name":"H",
-            "latitude": 36.3348972014457,
-            "longitude":127.452252197576
-        },
-        {
-            "name":"I",
-            "latitude": 36.3345579718001,
-            "longitude":127.452592732347
-        },
-        {
-            "name":"J",
-            "latitude":36.3354860267973, 
-            "longitude": 127.452038406354
-        },
-        {
-            "name":"K",
-            "latitude": 36.3367791550832,
-            "longitude":127.453243254584
-        },
-        {
-            "name":"L",
-            "latitude": 36.3368396150075,
-            "longitude":127.453934185306
-        }
-        ];
-        
+    <script>        
         var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
         var options = { //지도를 생성할 때 필요한 기본 옵션
 	        center: new kakao.maps.LatLng(36.33772801771988, 127.4495646858748), //지도의 중심좌표.
@@ -94,19 +31,19 @@
         };
         var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-        for(var i=0;i<Object.keys(park_area).length;i++){
-            var temp = park_area[i]["name"];
+        "<% data.forEach(function(item, index) {%>"
+            var temp = "<%= item.park_identi_number %>";
             var imageSrc = '/images/marker_'+temp+'.svg',
                 imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
                 imageOption = {offset: new kakao.maps.Point(27, 50)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
             var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-            markerPosition = new kakao.maps.LatLng(park_area[i]["latitude"], park_area[i]["longitude"]); // 마커가 표시될 위치입니다
+            markerPosition = new kakao.maps.LatLng("<%= item.park_area_latitude %>", "<%= item.park_area_longitude %>"); // 마커가 표시될 위치입니다
             window['marker_'+temp] = new kakao.maps.Marker({
                 position: markerPosition,
                 image: markerImage // 마커이미지 설정 
             });
             window['marker_'+temp].setMap(map);
-        }
+        "<% }); %>"
         //var temp = "H";
         //var imageSrc = '/images/marker_'+temp+'.svg',
         //    imageSize = new kakao.maps.Size(50, 50), // 마커이미지의 크기입니다
@@ -134,7 +71,7 @@
 		});
 
         kakao.maps.event.addListener(marker_B, 'click', function() {
-		  open("./AreaB","B");
+		  open("./AreaB", "_self","B");
 		});
 
         kakao.maps.event.addListener(marker_C, 'click', function() {
@@ -173,7 +110,7 @@
         //지역 이름 JSON화 가능 및 for문으로 간결하게
         var iwContent = '<a href="./AreaI"><div class="overlay_text">우송정보대학 앞</div></a>'; // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
         var customOverlay = new kakao.maps.CustomOverlay({
-            position: new kakao.maps.LatLng(park_area[8]["latitude"], park_area[8]["longitude"]),
+            position: new kakao.maps.LatLng("<%= data[8].park_area_latitude %>", "<%= data[8].park_area_longitude %>"),
             content: iwContent
         });
         

@@ -21,10 +21,10 @@
       </tr>
       <% data.forEach(function (item, index) { %>
         <tr>
-          <td><a href="/deleteA/<%= item.id%>">DELETE</a></td>
-          <td><a href="/editA/<%= item.id%>">EDIT</a></td>
-          <td><%= item.id %></td>
-          <td><%= item.state %></td>
+          <td><a href="/deleteA/<%= item.park_locate%>">DELETE</a></td>
+          <td><a href="/editA/<%= item.park_locate%>">EDIT</a></td>
+          <td><%= item.park_locate %></td>
+          <td><%= item.park_area_state %></td>
         </tr>
         <% }); %>
     </table>

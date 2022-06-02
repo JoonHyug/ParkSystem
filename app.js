@@ -46,13 +46,17 @@ app.use(bodyParaser.urlencoded({extended: true}));
 
 
 app.get('/', function(req, res){
-	let page;
-	//console.log(path);
-	ejs.renderFile('./views/main.html', (err, str) => {
-		page = str;
-	});
-	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-    res.end(page);
+	fs.readFile('./views/main.ejs','utf8', function (err, data) {
+		connection.query('SELECT * FROM PARK_info', function (err, results) {
+		  if (err) {
+			console.log(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results
+			}))
+		  }
+		})
+	  })
 });
 
 
@@ -73,17 +77,9 @@ app.get('/testDB', function(req, res){
 //         res.end(page);
 // });
 
-let temp = "A";
-app.get('/Area'+temp, function(req, res){
-	console.log(req.headers.host);
-	console.log(req.hea)
-	console.log(req.ip);
-	console.log(req.route.path);
-	console.log(req.route.methods);
-	//로그 테스트
-	writeLogFile(req.connection.remoteAddress);
-	fs.readFile('./views/AreaA.ejs','utf8', function (err, data) {
-		connection.query('select * from PARK_isParking', function (err, results) {
+app.get('/AreaADB', function(req, res){
+	fs.readFile('./views/AreaADBmanage.ejs','utf8', function (err, data) {
+		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
 		  if (err) {
 			res.send(err)
 		  } else {
@@ -95,9 +91,17 @@ app.get('/Area'+temp, function(req, res){
 	  })
 });
 
-app.get('/AreaADB', function(req, res){
-	fs.readFile('./views/AreaADBmanage.ejs','utf8', function (err, data) {
-		connection.query('select * FROM PARK_isParking', function (err, results) {
+let temp = "A";
+app.get('/Area'+temp, function(req, res){
+	console.log(req.headers.host);
+	console.log(req.hea)
+	console.log(req.ip);
+	console.log(req.route.path);
+	console.log(req.route.methods);
+	//로그 테스트
+	// writeLogFile(req.connection.remoteAddress);
+	fs.readFile('./views/AreaA.ejs','utf8', function (err, data) {
+		connection.query('select * from PARK_isParking ORDER BY park_area_count', function (err, results) {
 		  if (err) {
 			res.send(err)
 		  } else {
@@ -110,12 +114,17 @@ app.get('/AreaADB', function(req, res){
 });
 
 app.get('/AreaB', function(req, res){
-	let page;
-	ejs.renderFile('./views/AreaB.html', (err, str) => {
-		page = str;
-	});
-	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-    res.end(page);
+	fs.readFile('./views/AreaB.ejs','utf8', function (err, data) {
+		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
+		  if (err) {
+			console.log(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results
+			}))
+		  }
+		})
+	  })
 });
 
 app.get('/AreaC', function(req, res){
@@ -177,7 +186,7 @@ app.post('/inDB', function(req, res){
 	const body = req.body;	//app.use(express.json());사용 안한거, 아두이노에서 json파일 크기가 너무 작아서 body를 읽기 전에 클라이언트가 중단되어서 오류가 생겼었음
 	console.log(body);
 	//connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[
-	connection.query('UPDATE PARK_isParking SET state=? WHERE id=?;',[	 
+	connection.query('UPDATE PARK_isParking SET park_area_state=? WHERE park_locate=?;',[	 
 		body.state,
 		body.id
 	]);//같은 id값이라서 중복해서 삽입 할 경우 에러남
@@ -226,7 +235,7 @@ app.post('/edit/:id', function(req, res){
 })
 //--------------------------------------추후 간소화 시켜야함-----------------------
 app.get('/deleteA/:id', function(req, res){
-	connection.query('DELETE FROM PARK_isParking WHERE id=?;', [req.params.id], function(){
+	connection.query('DELETE FROM PARK_isParking WHERE park_locate=?;', [req.params.id], function(){
 		res.redirect('/AreaADB');
 	})
 });
@@ -238,7 +247,7 @@ app.get('/insertA', function(req, res){
 });
 app.post('/insertA', function(req, res){
 	const body = req.body;
-	connection.query('INSERT INTO PARK_isParking(id, state) VALUES(?, ?);', [
+	connection.query('INSERT INTO PARK_isParking(park_locate, park_area_state) VALUES(?, ?);', [
 		body.id,
 		Boolean(body.state)
 	  ], function() {
@@ -247,7 +256,7 @@ app.post('/insertA', function(req, res){
 });
 app.get('/editA/:id', function(req, res){
 	fs.readFile('./views/editA.ejs', 'utf-8', function(err, data){
-		connection.query('SELECT * FROM PARK_isParking WHERE id=?;', [req.params.id], function(err, result){
+		connection.query('SELECT * FROM PARK_isParking WHERE park_locate=? ORDER BY park_area_count;', [req.params.id], function(err, result){
 			console.log(result);
 			res.send(ejs.render(data, {
 				data : result[0]
@@ -258,7 +267,7 @@ app.get('/editA/:id', function(req, res){
 app.post('/editA/:id', function(req, res){
 	const body = req.body;
 	console.log(body);
-	connection.query('UPDATE PARK_isParking SET state=? WHERE id=?;', [
+	connection.query('UPDATE PARK_isParking SET park_area_state=? WHERE park_locate=?;', [
 		Boolean(body.state),
 		req.params.id], 
 		function(){
