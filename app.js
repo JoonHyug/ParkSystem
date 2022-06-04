@@ -93,13 +93,13 @@ app.get('/AreaADB', function(req, res){
 
 let temp = "A";
 app.get('/Area'+temp, function(req, res){
-	console.log(req.headers.host);
-	console.log(req.hea)
-	console.log(req.ip);
-	console.log(req.route.path);
-	console.log(req.route.methods);
+	//console.log(req.headers.host);
+	//console.log(req.hea)
+	//console.log(req.ip);
+	//console.log(req.route.path);
+	//console.log(req.route.methods);
 	//로그 테스트
-	// writeLogFile(req.connection.remoteAddress);
+	writeLogFile(req.connection.remoteAddress);
 	fs.readFile('./views/AreaA.ejs','utf8', function (err, data) {
 		connection.query('select * from PARK_isParking ORDER BY park_area_count', function (err, results) {
 		  if (err) {
