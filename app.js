@@ -160,47 +160,6 @@ app.post('/inDB', function(req, res){
 	]);//같은 id값이라서 중복해서 삽입 할 경우 에러남
 });
 
-app.get('/delete/:id', function(req, res){
-	connection.query('DELETE FROM test WHERE id=?;', [req.params.id], function(){
-		res.redirect('/DBmanage');
-	})
-});
-
-app.get('/insert', function(req, res){
-	fs.readFile('./views/insert.html', 'utf-8', function(err, data){
-		res.send(data);
-	})
-});
-app.post('/insert', function(req, res){
-	const body = req.body;
-	connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);', [
-		body.id,
-		body.test1,
-		body.test2
-	  ], function() {
-	res.redirect('/DBmanage')
-	})
-});
-app.get('/edit/:id', function(req, res){
-	fs.readFile('./views/edit.ejs', 'utf-8', function(err, data){
-		connection.query('SELECT * FROM test WHERE id=?;', [req.params.id], function(err, result){
-			res.send(ejs.render(data, {
-				data : result[0]
-			}))
-		})
-	})
-});
-app.post('/edit/:id', function(req, res){
-	const body = req.body;
-
-	connection.query('UPDATE test SET test1=?, test2=? WHERE id=?', [
-		body.test1, 
-		body.test2, 
-		req.params.id], 
-		function(){
-		res.redirect('/DBmanage')
-	})
-})
 //--------------------------------------추후 간소화 시켜야함-----------------------
 app.get('/deleteA/:id', function(req, res){
 	connection.query('DELETE FROM PARK_isParking WHERE park_locate=?;', [req.params.id], function(){
