@@ -202,19 +202,19 @@ app.post('/editA/:id', function(req, res){
 	})
 })
 
-app.get('/inputData', function(req, res){
-	connection.query(`INSERT INTO PARK_isParking(id, state) VALUES
-					("A-001", 0),
-					("A-002", 0),
-					("A-003", 0),
-					("A-004", 0),
-					("A-005", 0),
-					("A-006", 0),
-					("A-007", 0),
-					("A-008", 0);
-					`),
-					res.redirect('/');
-})
+// app.get('/inputData', function(req, res){
+// 	connection.query(`INSERT INTO PARK_isParking(id, state) VALUES
+// 					("A-001", 0),
+// 					("A-002", 0),
+// 					("A-003", 0),
+// 					("A-004", 0),
+// 					("A-005", 0),
+// 					("A-006", 0),
+// 					("A-007", 0),
+// 					("A-008", 0);
+// 					`),
+// 					res.redirect('/');
+// })
 
 /* const server = http.createServer(function(req, res){
 	const _url = req.url;
