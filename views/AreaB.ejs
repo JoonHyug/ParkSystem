@@ -46,20 +46,17 @@
                     fill=<%= color() %>>
                     <use xlink:href="#park"></use>
                 </svg>
-                <% console.log(area_count) %>
-            <% if(area_count < 105){area_count++} } %>
+            <% area_count++ } %>
         <% } %>
 
         <% function draw_park_vertical(index, ylocation){ %>
             <% for(let i=0; i<index; i++){ %>
-                <% console.log(data[area_count]); %>
                 <svg class= <%= "park_area_" + data[area_count].park_locate %> 
                     style=top:<%= ylocation+(i*3)+"%" %>
                     fill=<%= color() %>>
                     <use xlink:href="#park"></use>
                 </svg>
-                <% console.log(area_count) %>
-            <% if(area_count < 105){area_count++} } %>
+            <% area_count++ } %>
         <% } %>
         <!-- 6 -->
         <div class="park_area_list areaB1">
