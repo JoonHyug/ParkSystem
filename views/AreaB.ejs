@@ -46,6 +46,7 @@
                     fill=<%= color() %>>
                     <use xlink:href="#park"></use>
                 </svg>
+                <% console.log(area_count) %>
             <% area_count++ } %>
         <% } %>
 
@@ -56,7 +57,8 @@
                     fill=<%= color() %>>
                     <use xlink:href="#park"></use>
                 </svg>
-            <% area_count++ } %>
+                <% console.log(area_count) %>
+            <% if(area_count < 110)area_count++ } %>
         <% } %>
         <!-- 6 -->
         <div class="park_area_list areaB1">
