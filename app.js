@@ -145,38 +145,6 @@ app.get('/AreaD', function(req, res){
     res.end(page);
 });
 
-app.get('/DBmanage', function(req, res){
-	// let page;
-	// ejs.renderFile('./contents/DBmanage.ejs', {
-	// 	hehe: "ss",
-	// 	data:[
-	// 		{
-	// 			id:1,
-	// 			name:"hayoon",
-	// 			artist:"no",
-	// 			genre:"pop"
-	// 		},
-	// 		{
-	// 			id:2,
-	// 			name:"boo",
-	// 			artist:"sss",
-	// 			genre:"hippop"
-	// 		},
-
-	// 	]}, 'utf8', function (err, data) {
-	// 		page = data;
-	fs.readFile('./views/DBmanage.ejs','utf8', function (err, data) {
-		connection.query('select * from test', function (err, results) {
-		  if (err) {
-			res.send(err)
-		  } else {
-			res.send(ejs.render(data, {
-			  data: results
-			}))
-		  }
-		})
-	  })
-});
 
 // CREATE TABLE test(
 // id int NOT NULL PRIMARY KEY,
