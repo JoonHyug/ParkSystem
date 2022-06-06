@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParaser = require('body-parser');
 const fs = require('fs');
 const ejs = require('ejs');
+const date = require('date-utils');
 // const static = require('serve-static');
 
 //DB 세팅
@@ -42,6 +43,12 @@ app.use(express.static('public'));
 app.use(express.json());
 //app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(bodyParaser.urlencoded({extended: true}));
+
+function timeUpdate(){
+	let newDate = new Date();
+	return time = newDate.toFormat('YYYY-MM-DD HH24:MI:SS');
+};
+let lastUpdate = timeUpdate();
 
 
 
@@ -114,13 +121,15 @@ app.get('/Area'+temp, function(req, res){
 });
 
 app.get('/AreaB', function(req, res){
+	var lastUpdateAt;
 	fs.readFile('./views/AreaB.ejs','utf8', function (err, data) {
 		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
 		  if (err) {
 			console.log(err)
 		  } else {
 			res.send(ejs.render(data, {
-			  data: results
+			  data: results,
+			  lastUpdateAt : lastUpdate
 			}))
 		  }
 		})
@@ -151,6 +160,7 @@ app.get('/AreaD', function(req, res){
 // test1 int NOT NULL,
 // test2 VARCHAR(50));
 app.post('/inDB', function(req, res){
+	lastUpdate = timeUpdate();
 	const body = req.body;	//app.use(express.json());사용 안한거, 아두이노에서 json파일 크기가 너무 작아서 body를 읽기 전에 클라이언트가 중단되어서 오류가 생겼었음
 	console.log(body);
 	//connection.query('INSERT INTO test(id, test1, test2) VALUES(?, ?, ?);',[
@@ -158,6 +168,11 @@ app.post('/inDB', function(req, res){
 		body.state,
 		body.id
 	]);//같은 id값이라서 중복해서 삽입 할 경우 에러남
+});
+
+app.get('/testtime', function(req, res){
+	lastUpdate = timeUpdate();
+	console.log(lastUpdate);
 });
 
 //--------------------------------------추후 간소화 시켜야함-----------------------
@@ -198,9 +213,20 @@ app.post('/editA/:id', function(req, res){
 		Boolean(body.state),
 		req.params.id], 
 		function(){
+		lastUpdate = timeUpdate();
 		res.redirect('/AreaADB')
 	})
 })
+
+app.get('/getUpdates', function(req, res){
+	connection.query('SELECT * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
+		if (err) {
+		  console.log(err)
+		} else {
+		  res.json(lastUpdate);
+		}
+	  })
+});
 
 // app.get('/inputData', function(req, res){
 // 	connection.query(`INSERT INTO PARK_isParking(id, state) VALUES
@@ -240,5 +266,6 @@ app.post('/editA/:id', function(req, res){
 }); */
 
 http.createServer(app).listen(3000, function() {
+	console.log(lastUpdate);
 	console.log('Express 서버가 3000번 포트에서 시작됨.');
 });
