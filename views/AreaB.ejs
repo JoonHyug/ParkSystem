@@ -65,7 +65,7 @@
 
         <% var area_count = 0 %>
         <% var test = false %>
-        <% function color() { if(data[area_count].park_area_state == 0){return "red";} else {return "green";} }; %>
+        <% function color() { if(data[area_count].park_area_state == 0){return "#FF6B6B";} else {return "#6BCB77";} }; %>
         <% function draw_park_horizon(index, xlocation){ %>
             <% for(let i=0; i<index; i++){ %>
                 <svg class= <%= "park_area_" + data[area_count].park_locate %> 
