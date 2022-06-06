@@ -176,11 +176,11 @@ app.get('/testtime', function(req, res){
 });
 
 //--------------------------------------추후 간소화 시켜야함-----------------------
-app.get('/deleteA/:id', function(req, res){
-	connection.query('DELETE FROM PARK_isParking WHERE park_locate=?;', [req.params.id], function(){
-		res.redirect('/AreaADB');
-	})
-});
+// app.get('/deleteA/:id', function(req, res){
+// 	connection.query('DELETE FROM PARK_isParking WHERE park_locate=?;', [req.params.id], function(){
+// 		res.redirect('/AreaADB');
+// 	})
+// });
 
 app.get('/insertA', function(req, res){
 	fs.readFile('./views/insertA.html', 'utf-8', function(err, data){
