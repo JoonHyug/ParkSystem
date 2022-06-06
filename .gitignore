@@ -1,5 +1,6 @@
 #ignore#
 *.log
+connection.log
 
 /node_modules
-connection.log
+
