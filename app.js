@@ -121,19 +121,12 @@ app.get('/Area'+temp, function(req, res){
 });
 
 app.get('/AreaB', function(req, res){
-	var lastUpdateAt;
-	fs.readFile('./views/AreaB.ejs','utf8', function (err, data) {
-		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
-		  if (err) {
-			console.log(err)
-		  } else {
-			res.send(ejs.render(data, {
-			  data: results,
-			  lastUpdateAt : lastUpdate
-			}))
-		  }
-		})
-	  })
+	let page;
+	ejs.renderFile('./views/AreaB.html', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
 });
 
 app.get('/AreaC', function(req, res){
@@ -153,7 +146,21 @@ app.get('/AreaD', function(req, res){
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
     res.end(page);
 });
-
+app.get('/AreaE', function(req, res){
+	var lastUpdateAt;
+	fs.readFile('./views/AreaE.ejs','utf8', function (err, data) {
+		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
+		  if (err) {
+			console.log(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results,
+			  lastUpdateAt : lastUpdate
+			}))
+		  }
+		})
+	  })
+});
 
 // CREATE TABLE test(
 // id int NOT NULL PRIMARY KEY,

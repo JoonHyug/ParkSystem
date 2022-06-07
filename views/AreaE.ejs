@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E 주차구역</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <script>
+        //setTimeout(function(){
+        //    location.reload();
+        //}, 5000);
+        var c_time = "<%= lastUpdateAt %>";
+        setInterval(function(){
+            fetch('/getUpdates')
+            .then((response) => {
+                //정확한 에러 확인
+                    if(!response.ok) {
+                        throw new Error('400 or 500 error');
+                    }
+                    //console.log(response.json());
+                    return response.json()
+            })
+            .then((data) => {
+                    if(data != c_time){
+                        c_time = data;
+                        location.reload();
+                    }
+            })
+            .catch(()=>{
+                console.log()
+            });
+            //location.reload();
+        }, 5000);
+    </script>
+</head>
+<body>
+    <svg class="hidden" viewBox="0 0 5 11" version="1.1" id="park" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+        <g id="layer4">
+            <rect style="display:block;stroke-width:0.259142" id="rect950" width="5" height="11" x="0" y="0" ry="0.025988679" />
+        </g>
+    </svg>
+    <header>
+        <a href="/">
+            <div class="menubar">
+                <img class="logo" src="/images/WSU_logo.png">
+                <p class="test">우송 주차 현황</p>
+            </div>
+            <div class="test1">
+                <a href="./DBmanage" ><button class="test_button">관리</button></a>
+            </div>
+        </a>
+    </header>
+    <div class="main_img">
+        <!-- <svg><use>로 재사용시 height이 %가 먹히지 않는 현상 -->
+        <svg class="svg_size"  viewBox="0 0 132 95" version="1.1" id="parkmap" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <g id="layer1">
+
+                <g id="g88" transform="matrix(0.42758164,0,0,0.42859526,0,1.2906432e-4)">
+                <g id="layer2" transform="translate(10.855858,1)">
+                <g id="g426" transform="translate(-85.460416)" style="display:inline">
+                    <path class="park_parts" id="rect398" d="m 202.91839,0.00437932 c -0.94736,0 -1.71013,0.76233915 -1.71013,1.70970578 v 1.1623106 l -0.002,0.00121 v 33.6648063 h 0.0109 v 65.287128 h -0.002 v 18.29072 c 0,0 0.48139,8.2268 -3.3405,12.04872 -4.55224,4.55223 -15.97252,4.16696 -15.97252,4.16696 h -7.34692 c -0.0275,-0.001 -0.0543,-0.004 -0.0822,-0.004 h -32.68832 c -0.94736,0 -1.71013,0.76235 -1.71013,1.7097 v 15.47537 c 0,0.003 0.001,0.008 0.001,0.0109 v 52.17617 l 0.001,0.002 v 2.53562 c 0,0.94737 0.76276,1.7097 1.71013,1.7097 h 3.79251 28.8946 141.42499 l 0.0109,-0.006 h 2.40507 c 0.94736,0 1.71013,-0.76234 1.71013,-1.70971 v -2.74059 l 10e-4,-0.002 v -51.89886 c 0.001,-0.0241 0.004,-0.0479 0.004,-0.0723 v -15.47537 c 0,-0.94737 -0.76156,-1.70971 -1.70893,-1.70971 h -2.66974 l -0.002,-0.001 h -78.27817 c -2.12583,-0.10469 -5.53424,-0.4128 -8.59901,-1.31182 -2.54596,-0.74682 -2.53684,-4.03805 -2.735,-7.92518 -0.43364,-8.50631 7.07862,-14.48065 7.07862,-14.48065 v -0.0519 c 0.51529,-0.29081 7.1163,-3.97895 15.88188,-6.99074 7.41771,-2.54863 15.2096,-3.48028 17.42039,-3.70637 h 23.04148 l 0.002,-0.002 h 1.04058 c 0.004,0 0.008,-0.002 0.0121,-0.002 h 80.56237 c 1.34741,0 2.43165,-1.08451 2.43165,-2.431922 v -3.367565 c 0,-1.347412 -1.08424,-2.43193 -2.43165,-2.43193 h -69.39448 c 0,0 -0.58598,-0.121063 -0.76393,-0.334208 -0.18758,-0.224686 -0.20168,-0.853849 -0.20168,-0.853849 l 0,-56.472682 -0.001,-0.0012 v -3.766657 c 0,-0.947368 -0.76278,-1.709706 -1.71013,-1.709706 l -29.84532,0 c -0.86267,-0.33081 -11.96622,-4.096092 -24.74656,-9.231208 -8.95715,-3.598969 -15.58208,-5.566073 -23.03534,-10.407197 -9.17046,-5.9564969 -8.80484,-4.696288 -14.10672,-9.0578804 -0.66667,-0.6094157 -0.38913,-0.3556956 -1.15298,-1.04776755 -0.44225,-0.40069191 -0.78656,-0.73997065 -1.19407,-0.74633843 -0.74934,-0.01114202 -1.31105,0 -2.00503,0 z" />
+                </g>
+                </g>
+                <g id="layer3" style="display:inline" transform="translate(3.508102,1)">
+                <path class="other_parts" id="rect774" d="m 5.4802856,102.02616 c -3.0361227,0 -5.4802856,2.44416 -5.4802856,5.48028 v 11.9705 7.31429 77.81334 c 0,2.96848 2.3898429,5.35832 5.3583293,5.35832 l 36.7254917,0 c 2.968486,0 5.363991,-2.38985 5.358329,-5.35832 l -0.154698,-81.10062 c 0,0 -0.04373,-0.95153 0.397563,-1.39283 0.452131,-0.45213 1.520666,-0.47941 1.520666,-0.47941 l 55.251119,0 c 3.03612,0 5.42596,-2.44463 5.48028,-5.48028 l 0.1547,-8.64499 c 0.0543,-3.03564 -2.44416,-5.48028 -5.48028,-5.48028 z" />
+                <rect class="other_parts" id="rect807" width="87.107597" height="87.90229" x="22.225676" y="0" ry="2.1779845" />
+                <text x="45" y="50" style="font: 8px bold; fill: rgb(31 41 55); font-weight: 800; opacity: 1;">W19 운동장</text>
+                <text x="7" y="160" style="font: 8px bold; fill: rgb(31 41 55); font-weight: 800; opacity: 1;">예술회관</text>
+                <text x="270" y="100" style="font: 5px bold; fill: rgb(31 41 55); font-weight: 800; opacity: 1;">정문 방향</text>
+                <text x="136" y="205" style="font: 5px bold; fill: rgb(31 41 55); font-weight: 800; opacity: 1;">입구</text>
+                </g>
+                </g>
+                </g>
+            </svg>  
+        
+        <!-- <img class="svg_size" src="/images/park_test_2.svg" alt="주차장 이미지" /> -->
+        <% var area_count = 0 %>
+        <% var park_true = 0 %>
+        <% var park_false = 0 %>
+        <% function color() { 
+            if(data[area_count].park_area_state == 0){
+                park_false++;
+                return "#d1d5db";
+            } 
+            else {
+                park_true++;
+                return "#6BCB77";
+            } }; %>
+        <% function draw_park_horizon(index, xlocation){ %>
+            <% for(let i=0; i<index; i++){ %>
+                <svg class= <%= "park_area_" + data[area_count].park_locate %> 
+                    style=left:<%= xlocation+(i*1.3)+"%" %> 
+                    fill=<%= color() %>>
+                    <use xlink:href="#park"></use>
+                </svg>
+            <% area_count++ } %>
+        <% } %>
+
+        <% function draw_park_vertical(index, ylocation){ %>
+            <% for(let i=0; i<index; i++){ %>
+                <svg class= <%= "park_area_" + data[area_count].park_locate %> 
+                    style=top:<%= ylocation+(i*3)+"%" %>
+                    fill=<%= color() %>>
+                    <use xlink:href="#park"></use>
+                </svg>
+            <% area_count++ } %>
+        <% } %>
+        <!-- 6 -->
+        <div class="park_area_list areaB1">
+            <% var areaB1 = 47 %>
+            <% draw_park_horizon(6, areaB1) %>
+        </div>
+        <!-- 8 -->
+        <div class="park_area_list areaB2">
+            <% var areaB2 = 14.5 %>
+            <% draw_park_vertical(8, areaB2) %>
+        </div>
+        <!-- 10X2 -->
+        <div class="park_area_list areaB3">
+            <% var areaB3 = 46 %>
+            <% draw_park_horizon(10, areaB3) %>
+        </div>
+        <div class="park_area_list areaB4">
+            <% var areaB4 = 46 %>
+            <% draw_park_horizon(10, areaB4) %>
+        </div>
+        <!-- 10 -->
+        <div class="park_area_list areaB5">
+            <% var areaB5 = 46 %>
+            <% draw_park_horizon(10, areaB5) %>
+        </div>
+        <!-- 15 -->
+        <div class="park_area_list areaB6">
+            <% var areaB6 = 48.7 %>
+            <% draw_park_horizon(15, areaB6) %>
+        </div>
+        <!-- 9X2 -->
+        <div class="park_area_list areaB7">
+            <% var areaB7 = 52.6 %>
+            <% draw_park_horizon(9, areaB7) %>
+        </div>
+        <div class="park_area_list areaB8">
+            <% var areaB8 = 52.6 %>
+            <% draw_park_horizon(9, areaB8) %>
+        </div>
+        <!-- 12 + 2(경차) -->
+        <div class="park_area_list areaB9">
+            <% var areaB9 = 50 %>
+            <% draw_park_horizon(14, areaB9) %>
+        </div>
+        <!-- 4 / 6 -->
+        <div class="park_area_list areaB10">
+            <% var areaB10 = 37 %>
+            <% draw_park_horizon(4, areaB10) %>
+        </div>
+        <div class="park_area_list areaB11">
+            <% var areaB11 = 37 %>
+            <% draw_park_horizon(6, areaB11) %>
+        </div>
+        <!-- 6 + 1(장애인) -->
+        <div class="park_area_list areaB12">
+            <% var areaB12 = 37 %>
+            <% draw_park_horizon(7, areaB12) %>
+        </div>
+        <!-- 3(장애인) -->
+        <div class="park_area_list areaB13">
+            <% var areaB13 = 75 %>
+            <% draw_park_vertical(3, areaB13) %>
+        </div>
+        <div class="park_area_list notify">
+            <p><%= area_count%></p>
+            <p><%= park_true%></p>
+            <p><%= park_false%></p>
+        </div>
+        
+    </div>
+    
+    
+</body>
+</html>

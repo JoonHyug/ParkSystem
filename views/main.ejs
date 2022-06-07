@@ -10,17 +10,19 @@
 </head>
 <body>
     <header>
+        <a href="/">
             <div class="menubar">
-                <img class="" src="/images/WSU_logo.png" height="70px">
-                <a class="test">우송 주차 현황</a>
+                <img class="logo" src="/images/WSU_logo.png">
+                <p class="test">우송 주차 현황</p>
             </div>
             <div class="test1">
                 <a href="./DBmanage" ><button class="test_button">관리</button></a>
             </div>
+        </a>
     </header>
    
 
-    <div id="map" style="width:100%;height:800px;"></div>
+    <div id="map"></div>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=279dfcb5118231a09c15c572ff511d68">
     </script>
     <script>        
@@ -75,35 +77,35 @@
 		});
 
         kakao.maps.event.addListener(marker_C, 'click', function() {
-		  open("./AreaC","C");
+		  open("./AreaC", "_self","C");
 		});
 
         kakao.maps.event.addListener(marker_D, 'click', function() {
-		  open("./AreaD","D");
+		  open("./AreaD", "_self","D");
 		});
 
         kakao.maps.event.addListener(marker_E, 'click', function() {
-		  open("./AreaE","E");
+		  open("./AreaE", "_self","E");
 		});
 
         kakao.maps.event.addListener(marker_F, 'click', function() {
-		  open("./AreaF","F");
+		  open("./AreaF", "_self","F");
 		});
 
         kakao.maps.event.addListener(marker_G, 'click', function() {
-		  open("./AreaG","G");
+		  open("./AreaG", "_self","G");
 		});
 
         kakao.maps.event.addListener(marker_H, 'click', function() {
-		  open("./AreaH","H");
+		  open("./AreaH", "_self","H");
 		});
 
         kakao.maps.event.addListener(marker_I, 'click', function() {
-		  open("./AreaI","I");
+		  open("./AreaI", "_self","I");
 		});
 
         kakao.maps.event.addListener(marker_J, 'click', function() {
-            open("./AreaJ","J");
+            open("./AreaJ", "_self","J");
         });
 
 
@@ -135,7 +137,7 @@
             map.setZoomable(zoomable);    
         }
         setDraggable(false);
-        setZoomable(false);
+        setZoomable(true);
     </script>
 </body>
 </html>
