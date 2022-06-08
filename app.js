@@ -66,38 +66,6 @@ app.get('/', function(req, res){
 	  })
 });
 
-
-app.get('/testDB', function(req, res){
-	connection.query('SELECT * FROM test', (error, rows) =>{
-		console.log(rows);
-		res.send(rows);
-		res.end();
-	});
-});
-
-// app.get('/htmltest', function(req, res){
-// 	let page;
-// 	ejs.renderFile('./contents/login.html', (err, str) => {
-// 		page = str;
-// 	});
-// 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
-//         res.end(page);
-// });
-
-app.get('/AreaADB', function(req, res){
-	fs.readFile('./views/AreaADBmanage.ejs','utf8', function (err, data) {
-		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
-		  if (err) {
-			res.send(err)
-		  } else {
-			res.send(ejs.render(data, {
-			  data: results
-			}))
-		  }
-		})
-	  })
-});
-
 let temp = "A";
 app.get('/Area'+temp, function(req, res){
 	//console.log(req.headers.host);
@@ -107,22 +75,17 @@ app.get('/Area'+temp, function(req, res){
 	//console.log(req.route.methods);
 	//로그 테스트
 	writeLogFile(req.connection.remoteAddress);
-	fs.readFile('./views/AreaA.ejs','utf8', function (err, data) {
-		connection.query('select * from PARK_isParking ORDER BY park_area_count', function (err, results) {
-		  if (err) {
-			res.send(err)
-		  } else {
-			res.send(ejs.render(data, {
-			  data: results
-			}))
-		  }
-		})
-	  })
+	let page;
+	ejs.renderFile('./views/AreaA.ejs', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
 });
 
 app.get('/AreaB', function(req, res){
 	let page;
-	ejs.renderFile('./views/AreaB.html', (err, str) => {
+	ejs.renderFile('./views/AreaB.ejs', (err, str) => {
 		page = str;
 	});
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
@@ -131,7 +94,7 @@ app.get('/AreaB', function(req, res){
 
 app.get('/AreaC', function(req, res){
 	let page;
-	ejs.renderFile('./views/AreaC.html', (err, str) => {
+	ejs.renderFile('./views/AreaC.ejs', (err, str) => {
 		page = str;
 	});
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
@@ -140,26 +103,59 @@ app.get('/AreaC', function(req, res){
 
 app.get('/AreaD', function(req, res){
 	let page;
-	ejs.renderFile('./views/AreaD.html', (err, str) => {
+	ejs.renderFile('./views/AreaD.ejs', (err, str) => {
 		page = str;
 	});
 	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
     res.end(page);
 });
-app.get('/AreaE', function(req, res){
-	var lastUpdateAt;
-	fs.readFile('./views/AreaE.ejs','utf8', function (err, data) {
-		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
-		  if (err) {
-			console.log(err)
-		  } else {
-			res.send(ejs.render(data, {
-			  data: results,
-			  lastUpdateAt : lastUpdate
-			}))
-		  }
-		})
-	  })
+app.get('/AreaF', function(req, res){
+	let page;
+	ejs.renderFile('./views/AreaF.ejs', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+app.get('/AreaG', function(req, res){
+	let page;
+	ejs.renderFile('./views/AreaG.ejs', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+app.get('/AreaH', function(req, res){
+	let page;
+	ejs.renderFile('./views/AreaH.ejs', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+app.get('/AreaI', function(req, res){
+	let page;
+	ejs.renderFile('./views/AreaI.ejs', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+app.get('/AreaJ', function(req, res){
+	let page;
+	ejs.renderFile('./views/AreaJ.ejs', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
+});
+app.get('/AreaK', function(req, res){
+	let page;
+	ejs.renderFile('./views/AreaK.ejs', (err, str) => {
+		page = str;
+	});
+	res.writeHead(200, { 'Content-Type': 'text/html;charset=UTF-8' });
+    res.end(page);
 });
 
 // CREATE TABLE test(
@@ -177,34 +173,71 @@ app.post('/inDB', function(req, res){
 	]);//같은 id값이라서 중복해서 삽입 할 경우 에러남
 });
 
-app.get('/testtime', function(req, res){
-	lastUpdate = timeUpdate();
-	console.log(lastUpdate);
-});
-
 //--------------------------------------추후 간소화 시켜야함-----------------------
 // app.get('/deleteA/:id', function(req, res){
 // 	connection.query('DELETE FROM PARK_isParking WHERE park_locate=?;', [req.params.id], function(){
 // 		res.redirect('/AreaADB');
 // 	})
 // });
-
-app.get('/insertA', function(req, res){
-	fs.readFile('./views/insertA.html', 'utf-8', function(err, data){
+app.get('/AreaE', function(req, res){
+	var lastUpdateAt;
+	fs.readFile('./views/AreaE.ejs','utf8', function (err, data) {
+		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
+		  if (err) {
+			console.log(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results,
+			  lastUpdateAt : lastUpdate
+			}))
+		  }
+		})
+	  })
+});
+app.get('/AreaEDB', function(req, res){
+	var lastUpdateAt;
+	fs.readFile('./views/AreaEDB.ejs','utf8', function (err, data) {
+		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
+		  if (err) {
+			console.log(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results,
+			  lastUpdateAt : lastUpdate
+			}))
+		  }
+		})
+	  })
+});
+app.get('/AreaEDBM', function(req, res){
+	fs.readFile('./views/AreaEDBmanage.ejs','utf8', function (err, data) {
+		connection.query('select * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
+		  if (err) {
+			res.send(err)
+		  } else {
+			res.send(ejs.render(data, {
+			  data: results
+			}))
+		  }
+		})
+	  })
+});
+app.get('/insertE', function(req, res){
+	fs.readFile('./views/insertE.html', 'utf-8', function(err, data){
 		res.send(data);
 	})
 });
-app.post('/insertA', function(req, res){
+app.post('/insertE', function(req, res){
 	const body = req.body;
 	connection.query('INSERT INTO PARK_isParking(park_locate, park_area_state) VALUES(?, ?);', [
 		body.id,
 		Boolean(body.state)
 	  ], function() {
-	res.redirect('/AreaADB')
+	res.redirect('/AreaEDBM')
 	})
 });
-app.get('/editA/:id', function(req, res){
-	fs.readFile('./views/editA.ejs', 'utf-8', function(err, data){
+app.get('/editE/:id', function(req, res){
+	fs.readFile('./views/editE.ejs', 'utf-8', function(err, data){
 		connection.query('SELECT * FROM PARK_isParking WHERE park_locate=? ORDER BY park_area_count;', [req.params.id], function(err, result){
 			console.log(result);
 			res.send(ejs.render(data, {
@@ -213,7 +246,7 @@ app.get('/editA/:id', function(req, res){
 		})
 	})
 });
-app.post('/editA/:id', function(req, res){
+app.post('/editE/:id', function(req, res){
 	const body = req.body;
 	console.log(body);
 	connection.query('UPDATE PARK_isParking SET park_area_state=? WHERE park_locate=?;', [
@@ -221,10 +254,11 @@ app.post('/editA/:id', function(req, res){
 		req.params.id], 
 		function(){
 		lastUpdate = timeUpdate();
-		res.redirect('/AreaADB')
+		res.redirect('/AreaEDBM')
 	})
 })
 
+//시간 api
 app.get('/getUpdates', function(req, res){
 	connection.query('SELECT * FROM PARK_isParking ORDER BY park_area_count', function (err, results) {
 		if (err) {
@@ -233,6 +267,10 @@ app.get('/getUpdates', function(req, res){
 		  res.json(lastUpdate);
 		}
 	  })
+});
+app.get('/testtime', function(req, res){
+	lastUpdate = timeUpdate();
+	console.log(lastUpdate);
 });
 
 // app.get('/inputData', function(req, res){

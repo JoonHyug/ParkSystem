@@ -34,6 +34,7 @@ header{
 }
 .test{
     font-size:1.75rem;
+    font-weight: 600;
 }
 .test1{
     position: absolute;
@@ -43,17 +44,17 @@ header{
     align-items: center;
     
 }
-.test_button{
-    width: 50px;
-    height: 50px;
-}
-
 #map{
     display: block;
     position: relative;
     top: 50px;
 }
-.overlay_text{
+.cog{
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+}
+/* .overlay_text{
     display: block;
     line-height: 35px;
     background: blue;
@@ -66,7 +67,7 @@ header{
     top:auto;
     border-radius: 50%;
     z-index: 1;
-}
+} */
 /* AreaB */
 .hidden{
     position: absolute;
@@ -201,6 +202,7 @@ header{
     align-items: center;
     margin: 0 auto;
     font: 1.3rem bold;
+    font-weight: 600;
     line-height: 1%;
     vertical-align: middle;
 }

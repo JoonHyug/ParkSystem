@@ -10,7 +10,7 @@
     <h1>
         DB 관리 페이지
     </h1>
-    <a href="/insertA">Add Data</a>
+    <a href="/insertE">Add Data</a>
     <hr/>
     <table border="1">
       <tr>
@@ -21,8 +21,8 @@
       </tr>
       <% data.forEach(function (item, index) { %>
         <tr>
-          <td><a href="/deleteA/<%= item.park_locate%>">DELETE</a></td>
-          <td><a href="/editA/<%= item.park_locate%>">EDIT</a></td>
+          <td><a href="/deleteE/<%= item.park_locate%>">DELETE</a></td>
+          <td><a href="/editE/<%= item.park_locate%>">EDIT</a></td>
           <td><%= item.park_locate %></td>
           <td><%= item.park_area_state %></td>
         </tr>
