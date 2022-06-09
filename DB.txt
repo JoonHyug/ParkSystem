@@ -1,0 +1,52 @@
+CREATE TABLE PARK_isParking(
+park_locate VARCHAR(20) NOT NULL primary key,
+park_area VARCHAR(20),
+park_area_state boolean NOT NULL,
+park_area_count INT
+);
+
+
+CREATE TABLE PARK_info(
+park_identi_number VARCHAR(5) NOT NULL primary key,
+park_area_name VARCHAR(50),
+park_area_type VARCHAR(20),
+park_area_campus VARCHAR(20),
+park_area_latitude DOUBLE NOT NULL,
+park_area_longitude DOUBLE NOT NULL
+);
+
+
+INSERT INTO PARK_info(
+park_identi_number, park_area_name,
+park_area_type, park_area_campus,
+park_area_latitude, park_area_longitude )
+VALUES
+("A", "W2국제교육센터 앞", "지상", "서캠", 36.3394356377478, 127.447190803451),
+("B", "W5 지하주차장", "지하", "서캠", 36.3382083742845, 127.445223395473),
+("C", "W1 우송 도서관 앞", "지상", "서캠", 36.338053302047, 127.446932283495),
+("D", "동문 입구 지하주차장", "지하", "서캠", 36.3380449702238, 127.44735271687),
+("E", "예술회관 앞", "지상", "서캠", 36.336826550018, 127.446638461458),
+("F", "우송타워 주차장", "지하", "서캠", 36.3354608192731, 127.444341764188),
+("G", "국제경영센터", "지하", "동캠", 36.3348972014457, 127.452252197576),
+("H", "우송정보대학 앞", "지상(노면)", "동캠", 36.3345579718001, 127.452592732347),
+("I", "동캠퍼스 학교 앞", "지상", "동캠", 36.3354860267973, 127.452038406354),
+("J", "동캠퍼스 운동장 옆", "지상(노면)", "동캠", 36.3367791550832, 127.453243254584),
+("K", "E9 솔지오 앞", "지상(노면)", "동캠", 36.3368396150075, 127.453934185306);
+
+
+DELIMITER $$
+DROP procedure if exists avc$$
+CREATE procedure avc()
+BEGIN 
+	DECLARE i INT;
+    SET i = 0;
+	WHILE (i < 111)DO
+		INSERT INTO PARK_isParking(
+        park_locate, park_area, 
+        park_area_state, park_area_count)
+        VALUES(CONCAT("A-", i), "A", false, i);
+		SET i = i+1;
+	END WHILE;
+END $$
+DELIMITER ;
+call avc();
