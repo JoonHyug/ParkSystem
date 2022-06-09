@@ -302,12 +302,6 @@ header{
     padding: 0px 10px;
     color: rgb(31 41 55);
 }
-.ticket > tbody > tr > td > svg{
-    fill: rgb(31 41 55);
-    width: 50%;
-    cursor: pointer;
-    top: 0;
-}
 .ticket > tbody > tr > td{
     width: 20vmin;
     height: 5vmin;
@@ -323,4 +317,16 @@ header{
 }
 .n_border{
     border: 0 !important;
+}
+.cal_btn{
+    margin: 0 auto;
+    width: 20%;
+    padding: 0.4%;
+    border-radius: 100rem;
+    background-color: rgb(248 250 252);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.4)) drop-shadow(0 4px 4px rgb(0 0 0 / 0.3));
+}
+.cal_btn > svg{
+    fill: rgb(31 41 55 / 0.7);
+    cursor: pointer;
 }
