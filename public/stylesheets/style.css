@@ -185,13 +185,13 @@ header{
     position: static;
 }
 .area_count{
-    top: 44%;
+    top: 36%;
 }
 .park_false{
-    top: 52%;
+    top: 44%;
 }
 .park_true{
-    top: 60%;
+    top: 52%;
 }
 
 .area_count_text{
@@ -235,6 +235,9 @@ header{
 }
 
 .home{
+    top: 60%;
+}
+.cash{
     top: 68%;
 }
 .goto_map{
@@ -245,4 +248,79 @@ header{
 }
 .email{
     top: 92%;
+}
+/* modal창 */
+#modal.modal-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    /* border-radius: 10px; */
+    /* border: 1px solid rgba(255, 255, 255, 0.18); */
+}
+#modal .modal-window {
+    background: rgb(248 250 252);
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.2)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.15));
+    backdrop-filter: blur( 13.5px );
+    -webkit-backdrop-filter: blur( 13.5px );
+    border-radius: 10px;
+    /* border: 1px solid rgba( 255, 255, 255, 0.18 ); */
+    width: 30%;
+    height: 70%;
+    position: relative;
+    top: 0%;
+    padding: 10px;
+}
+#modal .title {
+    padding-left: 42%;
+    display: inline;
+    color: rgb(31 41 55);
+    
+}
+#modal .title h2 {
+    display: inline;
+}
+#modal .close-area {
+    display: inline;
+    float: right;
+    padding-right: 2%;
+    cursor: pointer;
+    color: rgb(31 41 55);
+}
+
+#modal .content {
+    width: 100%;
+    margin-top: 20px;
+    padding: 0px 10px;
+    color: rgb(31 41 55);
+}
+.ticket > tbody > tr > td > svg{
+    fill: rgb(31 41 55);
+    width: 50%;
+    cursor: pointer;
+    top: 0;
+}
+.ticket > tbody > tr > td{
+    width: 20vmin;
+    height: 5vmin;
+    text-align: center;
+    font: 1rem bold;
+    color: rgb(31 41 55);
+    border: 1px solid;
+}
+.ticket{
+    border-collapse: collapse;
+    top: 7%;
+    margin: auto;
+}
+.n_border{
+    border: 0 !important;
 }
