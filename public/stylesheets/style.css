@@ -330,3 +330,10 @@ header{
     fill: rgb(31 41 55 / 0.7);
     cursor: pointer;
 }
+.info{
+    position: absolute;
+    opacity: 0;
+}
+.park_true:hover .info{
+    opacity: 1;
+}

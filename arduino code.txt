@@ -12,12 +12,13 @@ char pass[] = "";
 
 int status = WL_IDLE_STATUS;  
 char servername[]="";//aws      // remote server we will connect to
+String serverAd = "";
 //char servername[]="";//로컬
 
 bool isparking = false;
 int park_in_count = 0;
 int park_out_count = 0;
-char id[] = "A-001";
+char id[] = "E-24";
 
 String parking_out = "";
 String parking_in = "";
@@ -125,7 +126,7 @@ void Connect_Server_in(){
       // Make a HTTP request:
 
       client.println("POST /inDB HTTP/1.1");
-      client.println("HOST: "+servername+":3000");
+      client.println("HOST: "+serverAd+":3000");
       client.println("User-Agent: Arduino");
       client.println("Accept: application/json");
       client.println("Content-Type: application/json");
@@ -151,7 +152,7 @@ void Connect_Server_out(){
       // Make a HTTP request:
 
       client.println("POST /inDB HTTP/1.1");
-      client.println("HOST: "+servername+":3000");
+      client.println("HOST: "+serverAd+":3000");
       client.println("User-Agent: Arduino");
       client.println("Accept: application/json");
       client.println("Content-Type: application/json");
